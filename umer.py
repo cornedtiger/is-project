@@ -1,16 +1,17 @@
-import synk
+# serialize.py
+import yaml
 
-target_url = "https://example.com"
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
 
-# Define a test suite
-class MyTestSuite(synk.TestSuite):
+    def __str__(self):
+        return f'<Person: {self.name} - {self.age}>'
 
-    # Define a test case
-    def test_sql_injection(self):
-        payloads = ["' OR 1=1; --", "1' OR '1'='1"]
-        for payload in payloads:
-            response = self.client.get(target_url, params={"user_id": payload})
-            self.assertNotContains("SQL error", response.content)
+    def __repr__(self):
+        return str(self)
 
-# Run the test suite
-synk.run(MyTestSuite)
+person = Person('Dhruv', 24)
+with open('person.yml', 'w') as output_file:
+    yaml.dump(person, output_file)
