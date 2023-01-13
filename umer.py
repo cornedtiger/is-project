@@ -1,8 +1,11 @@
-# deserialize.py
-import yaml
-
-# class Person needs to be present in the scope
-with open('person.yml', 'r') as input_file:
-    person = yaml.load(input_file, Loader = yaml.Loader)
-
-print(person)
+import requests
+import re
+ 
+url = input("Enter the URL: ")
+ 
+html = requests.get(url).text
+ 
+links = re.findall('"(https?://.*?)"', html)
+ 
+for link in links:
+    print(link)
